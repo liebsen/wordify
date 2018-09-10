@@ -1,0 +1,243 @@
+
+{% extends "layouts/default.html" %}
+
+{% block head %}
+
+  	<title>Refocus Now</title>
+  	<meta name="description" content="Refocus Now The Blue Ocean Company">
+  	<!--link type="text/css" rel="stylesheet" href="{{assetspath}}/css/81a992e0.css?_=ef034c97" media="screen" /-->
+
+	<script type="text/javascript">
+
+		var reframe_id = '{{reframe_id}}';
+		var reframe_guid = '{{reframe_guid}}';
+		var beliefs = [];
+
+		function importJSON(data) {
+			window.belief_templates = data.templates;
+			window.instructions = {{ instructions | raw }};
+		}
+	</script>
+  	<script type="text/javascript" src="{{assetspath}}/js/instructions.json?_=ef034c97" charset="UTF-8"></script>
+  	<script type="text/javascript" src="{{assetspath}}/js/78b2d3.js?_=ef034c97" charset="UTF-8"></script>
+
+{% endblock %}
+
+{% block body %}
+
+	<body class="home tool production">
+			
+		<!-- Page contents -->
+		<div role="main" id="container">
+			<div id="alerts">
+				
+				<div class="alert warning browserwarning">
+					<div class="message">
+						Reframe is optimized for modern browsers. Please <a href="http://www.google.nl/intl/nl/chrome/browser/" target="_blank">download Google Chrome</a> or similar.
+					</div>
+					<a href="#" class="close"></a>
+				</div>
+			
+			</div>
+			
+			<div id="pagewrapper">
+			
+				{% include 'shared/header.html' %}
+
+				<div id="content">
+					<a href="step/" class="nextstep">
+						<div class="icon"><span></span></div>
+						<div class="label">
+							<div class="proceed">Proceed</div>
+							<div class="stepnumber">to step </div>
+						</div>
+					</a>				
+				</div>
+			
+				<footer>
+					<ul class="stepprogress"></ul>
+				
+					<ul class="buttonbar narrow session">
+						<li><a href="#" class="button small light save">Send to self</a></li>
+						<li><a href="#" class="button small light new">New</a></li>
+					</ul>
+				
+					<div class="popups">
+				
+						<!-- Popup for saving your reframe -->
+						<div class="hint bottom save">
+							<p>Please fill in your email adress to access your reframe later.</p>
+							<form action="post" id="footer_save">
+								<input type="text" name="email" value="" class="validate[required,custom[email]] email" placeholder="your email address">
+								<p class="message"></p>
+								<input type="submit" value="Submit" />
+							</form>							
+						</div>
+				
+						<!-- Popup for creating a new reframe -->
+						<div class="hint bottom new">
+							<p>Are you sure you want to create a new reframe? Your current reframe will be lost if you didn't save it yet.</p>
+							<ul class="buttonbar">
+								<li><a href="{{baseurl}}/compose/" class="button" data-norouter="yes">Create new</a></li>
+							</ul>
+						</div>
+					</div>
+				
+					<div class="loading-icon"><img src="{{baseurl}}/img/ajax_loader.gif" alt="Loading..."></div>
+				
+				</footer>			
+			</div>		
+		</div>
+
+		<!-- Templates used in Backbone -->
+
+		<script type="text/template" id="template_alert">
+			<div class="alert {{ classes }} sitewide">
+				<div class="message">{{ message }}</div>
+				<a href="#" class="close"></a>
+			</div>
+		</script>
+
+		<script type="text/template" id="template_component_beliefinput">
+			<div class="beliefinput">
+				<div class="background"></div>
+				<textarea name="corebelief" cols="20" rows="4" spellcheck="false"></textarea>
+
+				<!-- <div class="textcontainer"></div> -->
+
+				<a class="edit" href="#"></a>
+				<a class="done" href="#"></a>
+				<a class="remove" href="#"></a>
+				<span class="checkmark"></span>
+
+				<div class="hitarea"></div>
+			</div>
+		</script>
+
+		<script type="text/template" id="template_component_instructions">
+			<div class="instructions">
+	
+				<div class="moreinfo">
+
+					<div class="moreinfopanel hidden">
+						<div class="wrapper"></div>
+						<a href="#" class="close"></a>
+					</div>
+
+				</div>
+
+				<ul class="messages"></ul>
+
+				<ul class="progress"></ul>
+				
+				<a class="playpause" href="#"></a>
+
+			</div>
+		</script>
+
+		<script type="text/template" id="template_component_splash">
+			<div class="splash content">
+			<h1>Reframe <span class="em">now</span></h1>
+
+			<!-- 	<div class="welcome">
+					
+				</div> -->
+
+				<!-- <div class="hint top plus">
+					<p>
+						New to the reframe tool? Here are some tips and tricks to get you started.
+					</p>
+					<p class="plus">
+						Click the plus for an expanded explanation of the given instruction. 
+					</p>
+				</div> -->
+
+				<!-- <div class="hint bottom dots">
+					The progress bar at the bottom can be used to go back to previous steps. Light blue dots indicate available steps.
+				</div> -->
+			</div>
+
+		</script>
+
+		<script type="text/template" id="template_component_share">
+
+		    <!-- APP -->       
+		    <div class="share content frame" id="firstShare">
+		        <h2>You have refocused!</h2>
+		        <img src="/img/tool_share_shadow.png" alt="" class="shadow">
+
+		        <br>
+		        
+		        {% include 'shared/sharebuttons.html' %}
+
+		        <ul class="sharing">
+		            <li class="col">
+		                <p class="rightAl">Keep it to inspire you. Receive a private link of your full Refocus in your inbox (*).</p>
+		                
+		                <form action="post" id="share_save">
+		                	<p class="message" id="emailMessage"></p>
+		                    <input type="text" name="email" value="" class="validate[required,custom[email]] email" placeholder="your email address">		                    
+		                    <input type="submit" value="Send" />
+		                </form>		                
+		            </li>
+
+		            <!--li class="col">
+		                <p id="h2right">Make this refocus for public reading. Publish your refocus so others can learn.</p>
+		                <form action="post" id="share_save">
+			                <input type="button" value="Publish" class="add_to_hall" id="step9HallInput" />
+		                </form>
+		                <p class="messageHall"></p>
+		            </li-->
+
+		            <li class="col">
+		                <p id="h2right">Want to apply this tool with your own team, division or organisation?</p>
+		                <form action="post" id="share_save">
+		                	<p>&nbsp;</p>
+			                <input type="button" value="Apply" onclick='location.href = "mailto:lilian.eilers@theblueoceancompany.com??subject=How can I apply the Refocus Tool with my team / division / organisation?"' />
+		                </form>
+		            </li>
+		        </ul>
+ 				<p><small>* We may use your email address to send you practical tips to keep you motivated and on track. Your  nformation will not be shared with external parties. To learn more, check out our privacy policy.</small></p>		        
+		    </div>
+		    <!-- END APP -->
+
+		</script>
+
+	</body>
+
+{% endblock %}
+
+{% block assets %}
+
+	<script type="text/javascript" src="{{assetspath}}/js/ebb8df.js?_=ef034c97" charset="UTF-8"></script>
+
+	<script type="text/javascript">
+
+		var token = $.parseJSON(localStorage.getItem("token")) || {}
+
+		function setToken(data) {
+			if(!Object.keys(data).length) return
+		    jQuery.ajax({
+		        type:'post',
+		        url: '{{baseurl}}' + '/tool/token/' + reframe_id,
+		        async: false,
+				beforeSend: function (xhr) { 
+		    		xhr.setRequestHeader('Authorization', 'Bearer ' + data.token) 
+		    	},
+		        success:function (res){
+		        	var status = ''
+		        	if(res.status==='success'){
+		        		var status = '<div class="hero-status slidein"><a href="'+base_url+'account" class="is-circle picture" style="background-image:url(' + token.picture + ')" title="' + token.first_name + '"></a></div>';
+		        	}
+
+		        	$('body').append(status)
+		        	console.log("refocus updated")
+		        }
+			})		
+		}
+
+		setToken(token)
+
+	</script>
+
+{% endblock %}

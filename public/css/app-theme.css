@@ -1,0 +1,42 @@
+.splash {
+  background-image: url(/img/s-l300.jpg);
+}
+
+.atencion { 
+  background-image: url(/img/atencion.svg);
+  padding-bottom: 400px;
+}
+
+.beneficios {
+  background-image: url(/img/clientes.svg);
+}
+
+.pagenotfound {
+	background-image: url(/img/atencion.svg);
+}
+
+.cotizacion { 
+  background-image: url(/img/cotizacion.svg);
+}
+
+.cotizacion label {
+  text-align: left;
+}
+
+.beneficios ul {
+	list-style: disc outside;
+  text-align: left;
+  padding-left: 2em;  
+}
+
+.beneficios li {
+	padding: 0;
+}
+
+.beneficios li + li {
+  margin-top: 0.25em;
+}
+
+.splash .card {
+  border-radius: 15px;
+}

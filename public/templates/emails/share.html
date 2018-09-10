@@ -1,0 +1,27 @@
+{% extends "layouts/email.html" %}
+
+{% block body %}
+            <!-- START CENTERED WHITE CONTAINER -->
+            <span class="preheader">Someone shared a refocus with you!</span>
+            <table class="main">
+
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td class="wrapper">
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <h2>Someone shared a refocus with you!</h2>
+                        <p>You’ll see that your Refocus is not necessarily the opposite of your original Core Belief, but a new alternative option.</p>
+                        <p>You’re now ready to take the next step. Go for it!</p>
+                        <p>Here's to your success,</p>
+                        <p>Sincerely,<a href="{{api_url}}">The Blue Ocean Company's Creative Team</a></p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- END MAIN CONTENT AREA -->
+              </table>
+{% endblock %}              

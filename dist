@@ -1,0 +1,53 @@
+<?php
+
+print "Packing assets...\n";
+
+require __DIR__ . "/vendor/autoload.php";
+
+$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv->load();
+
+//use Patchwork\JSqueeze;
+use MatthiasMullie\Minify;
+
+$dest = __DIR__ . '/' . getenv('APP_PUBLIC');
+//$head = substr(exec('git rev-parse HEAD'),0,7);
+
+array_map('unlink', glob($dest . '/dist/js/*'));
+array_map('unlink', glob($dest . '/dist/css/*'));
+
+// App
+// $minifier = new Minify\JS($dest . '/js/vue.js'); dev
+$minifier = new Minify\JS( $dest. '/js/vue.min.js');
+$minifier->add($dest . '/js/vue-router.js');
+$minifier->add($dest . '/js/vue-resource.min.js');
+$minifier->add($dest . '/js/jquery.min.js');
+$minifier->add($dest . '/js/jquery.instructor.js');
+$minifier->add($dest . '/js/moment-with-locales.min.js');
+//$minifier->add($dest . '/js/sweetalert.min.js');
+$minifier->add($dest . '/js/jsrender.min.js');
+$minifier->add($dest . '/js/bulma.js');
+$minifier->add($dest . '/js/base64.js');
+$minifier->add($dest . '/js/binaryajax.js');
+$minifier->add($dest . '/js/exif.js');
+$minifier->add($dest . '/js/slick.min.js');
+//$minifier->add($dest . '/js/fontawesome.js');
+$minifier->add($dest . '/js/app.js');
+$minifier->add($dest . '/js/refocus.js');
+$minifier->add($dest . '/js/components.js');
+$minifier->add($dest . '/js/routes.js');
+$minifier->minify($dest . '/dist/bundle.js');
+
+// css
+$minifier = new Minify\CSS($dest . '/css/bulma.css');
+$minifier->add($dest . '/css/lato.css');
+$minifier->add($dest . '/css/gibson.css');
+$minifier->add($dest . '/css/hero.css');
+$minifier->add($dest . '/css/movies.css');
+$minifier->add($dest . '/css/tooltips.css');
+$minifier->add($dest . '/css/slick.css');
+$minifier->add($dest . '/css/slick-theme.css');
+$minifier->add($dest . '/css/solid.css');
+$minifier->add($dest . '/css/fontawesome.min.css');
+$minifier->add($dest . '/css/refocus.css');
+$minifier->minify($dest . '/dist/bundle.css');

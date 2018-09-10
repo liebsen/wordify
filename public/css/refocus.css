@@ -1,0 +1,281 @@
+.belief {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  background-color: white;
+  border: 4px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .3s;
+  box-shadow: 0 0 10px #999;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; 
+}
+
+.beliefs-list {
+  position: relative;
+  top: 1px;
+  left:-30px;
+  min-height: 120px;
+}
+
+.beliefs-list .belief textarea{
+  cursor: pointer;
+}
+
+.beliefs-list .belief.core-opposite {
+  left:115px!important;
+}
+
+.beliefs-list .belief.core {
+  right:115px!important;
+}
+
+.belief.core {
+  background-color: #ec1c24;
+  border-color: white;
+}
+
+.belief.support {
+  background-color: white;
+  border-color: #ec1c24;
+}
+
+.belief.core-opposite {
+  background-color: #0065c8;
+  border-color: white;
+}
+
+.belief.opposite {
+  background-color: white;
+  border-color: #0065c8;
+}
+
+.belief.core textarea,
+.belief.core-opposite textarea {
+  color: white;
+}
+
+.belief.support textarea {
+  color: #ec1c24;
+}
+
+.belief.opposite textarea {
+  color: #0065c8;
+}
+
+/* visualise*/
+
+.beliefs-canvas {
+  background-color: #ddd;
+  position: relative;
+  height: 800px;
+  box-shadow: inset 0 400px 0 #fafafa;
+  text-align: center;
+}
+
+.beliefs-canvas .belief:nth-child(1) {
+  top:-400px!important;
+}
+
+.beliefs-canvas .belief:nth-child(3) {
+  top:-600px!important;
+  left:-200px!important;
+}
+
+.beliefs-canvas .belief:nth-child(4) {
+  top:-600px!important;
+  right:-200px!important;
+}
+
+.beliefs-canvas .belief:nth-child(5) {
+  top:-200px!important;
+  left:-200px!important;
+}
+
+.beliefs-canvas .belief:nth-child(6) {
+  top:-200px!important;
+  right:-200px!important;
+}
+
+
+
+.beliefs-canvas .belief:nth-child(2) {
+  top:400px!important;
+}
+
+.beliefs-canvas .belief:nth-child(7) {
+  top:200px!important;
+  left:-200px!important;
+}
+
+.beliefs-canvas .belief:nth-child(8) {
+  top:200px!important;
+  right:-200px!important;
+}
+
+.beliefs-canvas .belief:nth-child(9) {
+  top:600px!important;
+  left:-200px!important;
+}
+
+.beliefs-canvas .belief:nth-child(10) {
+  top:600px!important;
+  right:-200px!important;
+}
+
+
+/* composer */
+.movie-canvas .belief:nth-child(2) {
+ left:195px!important;
+ top:195px!important;  
+}
+
+.movie-canvas .belief:nth-child(3) {
+ left:195px!important;
+ bottom:195px!important;
+}
+
+.movie-canvas .belief:nth-child(4) {
+ right:195px!important;
+ top:195px!important;  
+}
+
+.movie-canvas .belief:nth-child(5) {
+ right:195px!important;
+ bottom:195px!important;  
+}
+
+.movie-canvas .belief.fresh {  
+  /* look movies.css for mor animations */
+  animation:.5s ease 0s normal forwards 1 scalein;
+  -webkit-animation:.5s ease 0s normal forwards 1 scalein;
+  opacity:1;
+}
+
+/*.movie-canvas .belief:hover,*/
+.movie-canvas .belief.edit {
+  z-index: 99;
+  transform: scale(2.5);
+  animation:none!important;
+  -webkit-animation:none!important;
+  /*animation:.3s ease 0s normal forwards 1 scaleover;
+  -webkit-animation:.3s ease 0s normal forwards 1 scaleover;
+  opacity:1;*/
+  box-shadow: 0 0 50px #999;
+}
+
+.belief textarea {
+  font-family: "Gibson Light";
+  width: 105px;
+  height: 90px;
+  text-align: center;
+  word-break: normal;
+  background: transparent;
+  resize: none;
+  border: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 9;
+  top: 28px;
+  left: 8px;
+  font-size: 0px;
+  text-rendering: optimizeSpeed;
+  text-transform: uppercase;  
+  border:none;
+  font-weight: 600;
+}
+
+.belief .pencil {
+  opacity: 0.5;
+  position: absolute;
+  top: 38px;
+  left: 46px;
+  color: white;
+  background-color: transparent;
+  transition: opacity .7s;
+}
+
+.belief .pencil .fa {
+  font-size: 40px;
+}
+
+.belief.support .pencil .fa, 
+.belief.opposite .pencil .fa {
+  color:#999;
+}
+
+.belief .save {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 10;
+  right: -5px;
+  bottom: 10px;
+  opacity: 0;
+  color: white;
+  background-color: #00b600;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: opacity .7s;
+  border: 3px solid white;
+}
+
+.belief .remove {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  right: -18px;
+  top: 20px;
+  opacity: 0;
+  color: white;
+  background-color: red;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: opacity .7s;
+  border: 2px solid white;
+}
+
+.belief.edit .pencil,
+.belief.populated .pencil
+{
+  visibility: hidden;
+  opacity: 0;
+}
+
+.belief.edit.populated .save {
+  visibility: visible;
+  opacity: 1;
+}
+/*
+.movie-canvas .belief.edit .save, 
+.movie-canvas .belief.edit .remove {
+  visibility: hidden;
+  opacity: 1;
+}
+
+.movie-canvas .belief.populated .save {
+  visibility: visible;
+  opacity: 1;
+} 
+
+.movie-canvas .belief.populated .pencil {
+  visibility: hidden;
+  opacity: 0;
+}
+*/
+
+.belief.main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}

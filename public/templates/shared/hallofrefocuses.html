@@ -1,0 +1,72 @@
+{% extends "layouts/default.html" %}
+
+{% block head %}
+
+  	<title>Hall of Refocuses</title>
+  	<meta name="description" content="Hall of Refocuses The Blue Ocean Company">
+
+{% endblock %}
+
+{% block body %}
+
+	<body class="home hallofrefocuses production">
+		
+		<!-- Page contents -->
+		<div role="main" id="container">
+			<div id="notices"></div>
+			
+			<div id="pagewrapper">
+				
+			{% include 'header.html' %}
+				
+			<div id="content">
+					<div class="content contentHall">
+						<h1>Hall of <br /><span class="em">refocuses</span></h1>
+					
+						<p>
+							Check out the reframes that other people created.
+						</p>
+						
+						<div id="hallContainer">
+							<div class="supportBe">	
+								{% for i, item in reframes %}
+									<div class="newreframeBe">
+									{% for j, text in item.beliefs %}
+										<div class="new {% if j == 0%}first{% elseif j + 1 == item.beliefs | length %}last{% else %}middle{{j}}{% endif %} circle-text" id="circle-2"><div class="content">{{ text }}</div></div>
+									{% endfor %}
+									</div>
+									<div class="reframe">
+										<div class="belief circle-text" id="circle-1"><div class="content">{{ item.belief }}</div></div>
+										<div class="belief opposite circle-text" id="circle-1"><div class="content">{{ item.opposite }}</div></div>
+									</div>
+									<div class="newreframeOp">
+									{% for h, text in item.opposites %}
+										<div class="new {% if h == 0%}firstOp{% elseif h + 1 == item.opposites | length %}lastOp{% else %}middle{{h}}Op{% endif %} circle-text" id="circle-2"><div class="content">{{ text }}</div></div>
+									{% endfor %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div style="clear:both;"></div>
+						<ul class="buttonbarHall">
+							<li><a href="{{baseurl}}" class="button">Back to homepage</a></li>
+						</ul>
+					</div>
+					
+					<div style="clear:both; padding-bottom:75px;"></div>
+					
+					<!--div class="addthis_native_toolbox">
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-547f279d69aa90ba" async="async"></script-->
+					</div>				</div>
+			
+				<footer></footer>			
+			</div>		
+		</div>
+	</body>
+
+{% endblock %}
+
+{% block assets %}
+  	<script type="text/javascript" src="{{assetspath}}/js/78b2d3.js?_=ef034c97" charset="UTF-8"></script>
+	<script type="text/javascript" src="{{assetspath}}/js/66951dae.js?_=ef034c97" charset="UTF-8"></script>
+{% endblock %}

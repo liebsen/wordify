@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es-ES">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>{{app_title}}</title>
+  <link rel="home" href="/">
+
+  <!-- Page Meta -->
+  <meta name="description" content="{{share_title}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="twitter:card" value="summary">
+  <meta property="og:title" content="{{share_title}}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{app_url}}" />
+  <meta property="og:image" content="{{share_pic}}" />
+  <meta property="og:description" content="{{share_text}}" /> 
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" type="image/x-icon">
+
+  <!-- Styles -->
+  {% if localhost == false %}
+  <link href="/dist/bundle.css?_={{rev_parse}}" rel="stylesheet" type="text/css">
+  {% else %}   
+  <link rel="stylesheet" href="/css/lato.css">
+  <link rel="stylesheet" href="/css/gibson.css">
+  <link rel="stylesheet" href="/css/bulma.css">
+  <link rel="stylesheet" href="/css/hero.css">
+  <link rel="stylesheet" href="/css/movies.css">
+  <link rel="stylesheet" href="/css/refocus.css">
+  <link rel="stylesheet" href="/css/solid.css">
+  <link rel="stylesheet" href="/css/fontawesome.css">
+  <link rel="stylesheet" href="/css/tooltips.css">
+  <link rel="stylesheet" href="/css/slick.css">
+  <link rel="stylesheet" href="/css/slick-theme.css">
+  {% endif %}
+  <!--link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' /-->
+
+  {% if params.webfont %}
+  <link href="https://fonts.googleapis.com/css?family={{params.webfont}}" rel="stylesheet">
+  <style>
+    body {
+      font-family: "{{params.webfont}}";
+    }
+  </style>
+  {% endif %}
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!--script async src="https://www.googletagmanager.com/gtag/js?id=UA-118678125-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-118678125-1');
+  </script-->
+</head>
+<body>
+  <div id="app">
+    <div id="quickviewDefault" class="quickview">
+      <header class="quickview-header">
+        <p class="title">Quickview title</p>
+        <span class="delete" data-dismiss="quickview"></span>
+      </header>
+
+      <div class="quickview-body">
+        <div class="quickview-block">
+          ...
+        </div>
+      </div>
+
+      <footer class="quickview-footer">
+
+      </footer>
+    </div>
+
+    <!--button class="button is-primary" data-show="quickview" data-target="quickviewDefault">Show quickview</button-->
+
+    <section class="hero is-medium is-bold">
+      <div class="hero-head hidden-loading">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="/">
+                <!--strong>Refocus</strong-->
+                <img src="/img/logoh.png" alt="Logo">
+              </a>
+              <span class="navbar-burger burger" data-target="navbarMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+            <div id="navbarMenu" class="navbar-menu">
+              <div class="navbar-end">
+                <div class="tabs is-right">
+                  <ul>
+                    <!--li v-if="token().token" class="auth-status">
+                      <a href="/account">
+                        <span class="icon">
+                          <i class="fa fa-user-circle"></i>
+                        </span>
+                        <span v-if="token().first_name && token().first_name.length" v-html="token().first_name"></span>
+                        <span v-if="!token().first_name || !token().first_name.length" v-html="token().email"></span>
+                      </a>
+                    </li>
+                    <li v-if="!token().token">
+                      <a href="/sign-in">Sign In</a>
+                    </li-->
+                  </ul>
+                  <span class="navbar-item">
+                    <!--a class="button is-white is-outlined" href="/movie/refocus/1"-->
+                    <a class="button is-white is-outlined" href="/tool" bypass="true">
+                      <span class="icon">
+                        <i class="fa fa-chevron-right"></i>
+                      </span>
+                      <span>Refocus Now</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="hero-status hidden-loading scalein">
+        <ul>
+          <li v-show="token().token" class="hero-compose">
+            <a href="/tool" bypass="true" class="is-circle hslidein" tabindex="4" data-balloon="Refocus Now" data-balloon-pos="right">
+              <span class="icon">
+                <i class="fa fa-pencil-alt has-text-success"></i>
+              </span>
+            </a>
+          </li>
+          <li v-show="token().token" class="account">
+            <a href="/account" class="is-circle picture hslidein" :style="'background-image:url(' + token().picture + ')'" tabindex="3" data-balloon="My Account" data-balloon-pos="right"></a>
+          </li>
+          <li v-show="!token().token" class="signin">
+            <a href="/sign-in" class="is-circle hslidein" tabindex="4" data-balloon="Sign in" data-balloon-pos="right">
+              <span class="icon">
+                <i class="fa fa-sign-in-alt has-text-success"></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <keep-alive exclude="account,archive">
+        <router-view :key="$route.fullPath"><div class="spinner-outer fadeIn"><div class="spinner" data-layer="4"><div class="spinner-container"><div class="spinner-rotator"><div class="spinner-left"><div class="spinner-circle"></div></div><div class="spinner-right"><div class="spinner-circle"></div></div></div></div><div class="spinner-message"></div></div></div></router-view>
+      </keep-alive>
+
+    </section>
+
+    <footer class="footer hidden-loading">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-3 is-offset-2">
+            <h2><strong>Tools</strong></h2>
+            <ul>
+              <li>
+                <a bypass="true" href="/tool">Refocus (v1)</a>
+              </li>
+              <li>
+                <!--a href="/movie/refocus/1"><span data-balloon="Refocusing can be used both for professional and for private problems." data-balloon-length="fit" data-balloon-pos="right">Refocus (v2 experimental)</span></a-->
+                <a href="/movie/refocus/1"><span>Refocus (v2 experimental)</span></a>
+              </li>
+            </ul>
+          </div>
+          <div class="column is-3">
+            <h2><strong>Company</strong></h2>
+            <ul>
+              <li>
+                <a href="/tos">Terms</a>
+              </li>
+              <li>
+                <a href="/privacy">Privacy</a>
+              </li>
+              <li>
+                <a href="/press">Press</a>
+              </li>
+            </ul>
+          </div>
+          <div class="column is-4">
+            <h2><strong>Contact</strong></h2>
+            <ul>
+              <li><a href="/contact-us"><span>Message</span></a></li>
+              <li><a href="mailto:user@email.com"><span>Email</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="content has-text-centered">
+          <div class="control level-item">
+            <!--a href="/" data-balloon="Go to homepage" data-balloon-length="fit" data-balloon-pos="up"-->
+            <a href="/">
+              <div class="tags has-addons">
+                <span class="tag is-dark">TBOC</span>
+                <span class="tag is-info">Refocus</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
+  <script type="text/x-template" id="section">
+    <div>
+      <div class="hero-picture slidein" v-if="data.picture" :style="'background-image:url(' + data.picture + ')'">
+        <div class="hero-text">
+          <h1 class="title is-uppercase" v-html="data.title"></h1>
+          <h2 class="subtitle is-uppercase" v-html="data.intro"></h2>
+        </div>
+      </div>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div v-show="loading" class="spinner-outer fadeIn"><div class="spinner" data-layer="4"><div class="spinner-container"><div class="spinner-rotator"><div class="spinner-left"><div class="spinner-circle"></div></div><div class="spinner-right"><div class="spinner-circle"></div></div></div></div><div class="spinner-message"></div></div></div>
+          <div v-if="!data.picture">
+            <h1 class="title is-uppercase" v-html="data.title"></h1>
+            <h2 class="subtitle is-uppercase" v-html="data.intro"></h2>
+          </div>
+          <div class="content">
+            <p v-html="data.content"></p>
+            <div v-if="data.posts && data.posts.length">
+              <div class="slick slick-main">
+                <div class="slick-item" v-for="item in data.posts" :style="'background-image:url('+ item.picture +')'">
+                  <h4 v-html="item.title"></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-show="data.button_link" class="has-text-centered">
+            <h2 class="subtitle is-uppercase"  v-html="data.button_text"></h2>
+            <a :href="data.button_link" class="button is-large is-success hvr-float-shadow" v-html="data.button_label"></a>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="movie">
+    <div class="movie-canvas">
+      <div class="steps">
+        <div class="steps-ind">          
+        </div>
+        <div class="ins">
+          <span v-for="item in targets" v-html="item"></span>
+        </div>
+      </div>
+      <div class="next-step" v-if="forward">
+        <a class="fadein" :href="nextstep"><span class="fa fa-chevron-right"></span> NEXT STEP </a>
+      </div>      
+      <div class="action-canvas">
+        <div v-for="item in actors" class="actor" :class="item.clss" :item-id="item.id" :data="item.data">
+          <textarea @keyup="updateBeliefText" ref="textarea" v-html="item.text"></textarea>
+          <div class="pencil"><span class="fa fa-pencil"></span></div>
+          <div class="save" @click="save"><span class="fa fa-check"></span></div>
+          <div class="remove" @click="remove"><span class="fa fa-times"></span></div>         
+        </div>
+      </div>      
+    </div>
+  </script>
+
+  <script type="text/x-template" id="account">
+    <div class="hero-body is-pin">
+      <div class="container has-text-left">
+        <div class="tabs account-tabs is-centered">
+          <ul>
+            <li class="is-active"><a data-balloon="Dashboard" data-balloon-pos="up"><span class="fa fa-desktop fa-2x has-text-info"></span></a></li>
+            <li><a href="/account/archive" data-balloon="Archive" data-balloon-pos="up"><span class="fa fa-archive fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/edit" data-balloon="My Account" data-balloon-pos="up"><span class="fa fa-user-circle fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/password" data-balloon="Change password" data-balloon-pos="up"><span class="fa fa-lock fa-2x has-text-primary"></span></a></li>
+            <li><a href="#" @click="filters.endSession()" data-balloon="Sign out" data-balloon-pos="up"><span class="fa fa-sign-out-alt fa-2x has-text-danger" ></span></a></li>
+          </ul>
+        </div>
+        <div class="box"> 
+          <p v-if="!data || !data.length">
+            <span v-html="loadingText"></span>
+            <a href="/tool" bypass="true">Refocus Now</a>
+          </p>
+          <article class="media" v-for="item in data" :class="item.guid">
+            <div class="media-left">
+              <figure class="image is-64x64 is-pin">
+                <img class="is-circle" :src="item.author.picture" :title="item.author.first_name">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong v-html="item.code"></strong> <small v-html="filters.isHumanTime(item.created)"></small>
+                  <div class="beliefs-list">
+                    <div class="belief core">
+                      <textarea v-html="item.beliefs.core" readonly></textarea>
+                    </div>
+                    <div class="belief core-opposite">
+                      <textarea v-html="item.beliefs.opposite" readonly></textarea>
+                    </div>
+                  </div>
+                </p>
+              </div>
+              <nav class="level is-mobile level-right">
+                <div class="level-left">
+                  <a :href="'/account/refocuses/' + item.guid" class="level-item" aria-label="reply" data-balloon="View Refocus" data-balloon-pos="up">
+                    <span class="icon is-medium">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" data-balloon="Download" data-balloon-pos="up" @click="download(item.guid)">
+                    <span class="icon is-medium">
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item modal-button" data-balloon="Send by email" data-balloon-pos="up" data-target="modal-share" aria-haspopup="true" @click="mark(item)">
+                    <span class="icon is-medium">
+                      <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" data-balloon="Archive" data-balloon-pos="up" @click="archive(item)">
+                    <span class="icon is-medium">
+                      <i class="fa fa-archive" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </article>
+          <div class="modal" id="modal-share">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Share Refocus by e-mail</p>
+                <button class="delete" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <form class="form has-text-left" @submit.prevent="share" :guid="selected.guid" :code="selected.code">
+                  <small class="hast-text-success"><span v-html="selected.code"></span></small>
+                  <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                      <input class="input" type="email" name="email" placeholder="johndoe@gmail.com" autofocus required>
+                    </div>
+                    <p v-if="message && message.length" class="help" :class="messageType" v-html="message"></p>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <button type="submit" class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Share</button>
+                    </div>
+                  </div>    
+                </form>
+              </section>
+              <!--footer class="modal-card-foot">
+                <button class="button is-success">Send refocus</button>
+                <button class="button">Cancel</button>
+              </footer-->
+            </div>
+          </div>             
+        </div>           
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="archive">
+    <div class="hero-body is-pin">
+      <div class="container has-text-left">
+        <div class="tabs account-tabs is-centered">
+          <ul>
+            <li><a href="/account" data-balloon="Dashboard" data-balloon-pos="up"><span class="fa fa-desktop fa-2x has-text-primary"></span></a></li>
+            <li class="is-active"><a data-balloon="Archive" data-balloon-pos="up"><span class="fa fa-archive fa-2x has-text-info"></span></a></li>
+            <li><a href="/account/edit" data-balloon="My Account" data-balloon-pos="up"><span class="fa fa-user-circle fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/password" data-balloon="Change password" data-balloon-pos="up"><span class="fa fa-lock fa-2x has-text-primary"></span></a></li>
+            <li><a href="#" @click="filters.endSession()" data-balloon="Sign out" data-balloon-pos="up"><span class="fa fa-sign-out-alt fa-2x has-text-danger" ></span></a></li>
+          </ul>
+        </div>
+        <div class="box"> 
+          <p v-if="!data || !data.length">
+            <span v-html="loadingText"></span>
+          </p>
+          <article class="media" v-for="item in data" :class="item.guid">
+            <div class="media-left">
+              <figure class="image is-64x64 is-pin">
+                <img class="is-circle" :src="item.author.picture" :title="item.author.first_name">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong v-html="item.code"></strong> <small v-html="filters.isHumanTime(item.created)"></small>
+                  <div class="beliefs-list">
+                    <div class="belief core">
+                      <textarea v-html="item.beliefs.core" readonly></textarea>
+                    </div>
+                    <div class="belief core-opposite">
+                      <textarea v-html="item.beliefs.opposite" readonly></textarea>
+                    </div>
+                  </div>
+                </p>
+              </div>
+              <nav class="level is-mobile level-right">
+                <div class="level-left">
+                  <a :href="'/account/refocuses/' + item.guid" class="level-item" aria-label="reply" data-balloon="View Refocus" data-balloon-pos="up">
+                    <span class="icon is-medium">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item" aria-label="like" data-balloon="Restore" data-balloon-pos="up" data-target="modal-share" aria-haspopup="true" @click="restore(item)">
+                    <span class="icon is-medium">
+                      <i class="fa fa-desktop" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <a class="level-item modal-button" aria-label="like" data-balloon="Remove" data-balloon-pos="up" data-target="modal-delete" aria-haspopup="true" @click="mark(item)">
+                    <span class="icon is-medium">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </article>
+          <div class="modal" id="modal-delete">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Remove refocus permanently</p>
+                <button class="delete" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <form class="form has-text-left" @submit.prevent="remove" :guid="selected.guid" :code="selected.code">
+                  <small class="hast-text-success"><span v-html="selected.code"></span></small>
+                  <div class="field">
+                    <div class="control">
+                      <button type="submit" class="button is-danger is-medium is-fullwidth" :class="{'is-loading' : loading}">Confirm remove</button>
+                    </div>
+                  </div>    
+                </form>
+              </section>
+              <!--footer class="modal-card-foot">
+                <button class="button is-success">Send refocus</button>
+                <button class="button">Cancel</button>
+              </footer-->
+            </div>
+          </div>               
+        </div>           
+      </div>
+    </div>
+  </script>
+
+
+  <script type="text/x-template" id="editaccount">
+    <div class="hero-body is-pin">
+      <div class="container has-text-left">
+        <div class="tabs account-tabs is-centered">
+          <ul>
+            <li><a href="/account" data-balloon="Dashboard" data-balloon-pos="up"><span class="fa fa-desktop fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/archive" data-balloon="Archive" data-balloon-pos="up"><span class="fa fa-archive fa-2x has-text-primary"></span></a></li>
+            <li class="is-active"><a href="/account/edit" data-balloon="My Account" data-balloon-pos="up"><span class="fa fa-user-circle fa-2x has-text-info"></span></a></li>
+            <li><a href="/account/password" data-balloon="Change password" data-balloon-pos="up"><span class="fa fa-lock fa-2x has-text-primary"></span></a></li>
+            <li><a href="#" @click="filters.endSession()" data-balloon="Sign out" data-balloon-pos="up"><span class="fa fa-sign-out-alt fa-2x has-text-danger" ></span></a></li>
+          </ul>
+        </div>
+        <h1 class="title is-uppercase">Edit my account</h1>
+        <h2 class="subtitle is-uppercase">Keep your account updated.</h2>
+        <div class="badge account-picture">
+          <input hidden="true" id="uploads" type="file" @change="onFileChange" name="uploads[]" optional="true" accept="image/*">
+          <div class="is-circle picture" v-on:click="clickImage(token.id)" :style="'background-image:url(' + token().picture + ')'" data-balloon="Upload a profile picture" data-balloon-pos="right"></div>
+        </div>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <label class="label">First Name</label>
+                <div class="control">
+                  <input class="input" name="first_name" type="text" placeholder="John" :value="token().first_name" autofocus required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control">
+                  <input class="input" type="text" name="last_name" placeholder="Doe" :value="token().last_name" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" placeholder="johndoe@gmail.com" :value="token().email" required>
+            </div>
+            <p class="help is-danger is-hidden">This email is invalid</p>
+          </div>
+
+          <div class="field" v-if="message && message.length">
+            <p class="help" :class="messageType" v-html="message"></p>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Save changes</button>
+            </div>
+          </div>    
+        </form>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="changepassword">
+    <div class="hero-body is-pin">
+      <div class="container has-text-left">
+        <div class="tabs account-tabs is-centered">
+          <ul>
+            <li><a href="/account" data-balloon="Dashboard" data-balloon-pos="up"><span class="fa fa-desktop fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/archive" data-balloon="Archive" data-balloon-pos="up"><span class="fa fa-archive fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/edit" data-balloon="My Account" data-balloon-pos="up"><span class="fa fa-user-circle fa-2x has-text-primary"></span></a></li>
+            <li class="is-active"><a href="/account/password" data-balloon="Change password" data-balloon-pos="up"><span class="fa fa-lock fa-2x has-text-info"></span></a></li>
+            <li><a href="#" @click="filters.endSession()" data-balloon="Sign out" data-balloon-pos="up"><span class="fa fa-sign-out-alt fa-2x has-text-danger" ></span></a></li>
+          </ul>
+        </div> 
+        <h1 class="title is-uppercase">Change password</h1>
+        <h2 class="subtitle is-uppercase">Confirm the password update.</h2>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <label class="label">Current Password</label>
+                <div class="control">
+                  <input class="input" name="password" type="password" placeholder="********" value="" autofocus required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">New Password</label>
+                <div class="control">
+                  <input class="input" type="password" name="new_password" placeholder="********" value="" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field" v-if="message && message.length">
+            <p class="help" :class="messageType" v-html="message"></p>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Change password</button>
+            </div>
+          </div>    
+        </form>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="refocus">
+    <div class="hero-body is-pin">
+      <div class="container has-text-left">
+        <div class="tabs account-tabs is-centered">
+          <ul>
+            <li class="is-active"><a href="/account" data-balloon="Dashboard" data-balloon-pos="up"><span class="fa fa-desktop fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/archive" data-balloon="Archive" data-balloon-pos="up"><span class="fa fa-archive fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/edit" data-balloon="My Account" data-balloon-pos="up"><span class="fa fa-user-circle fa-2x has-text-primary"></span></a></li>
+            <li><a href="/account/password" data-balloon="Change password" data-balloon-pos="up"><span class="fa fa-lock fa-2x has-text-primary"></span></a></li>
+            <li><a href="#" @click="filters.endSession()" data-balloon="Sign out" data-balloon-pos="up"><span class="fa fa-sign-out-alt fa-2x has-text-danger" ></span></a></li>
+          </ul>
+        </div>
+        <!--h1 class="title is-uppercase" v-html="data.guid"></h1-->
+        <p><strong v-html="data.code"></strong> <span v-html="filters.isHumanTime(data.created)"></span></p>
+        <div class="container has-text-center beliefs-canvas" v-if="data.beliefs">
+          <div class="belief core-opposite">
+            <textarea v-html="data.beliefs.opposite" readonly></textarea>
+          </div>
+          <div class="belief core">
+            <textarea v-html="data.beliefs.core" readonly></textarea>
+          </div>
+          <div v-for="text in data.beliefs.opposites" class="belief opposite">
+            <textarea v-html="text" readonly></textarea>
+          </div>
+          <div v-for="text in data.beliefs.supports" class="belief support">
+            <textarea v-html="text" readonly></textarea>
+          </div>
+        </div>
+        <nav class="level is-mobile level-right">
+          <div class="level-left">
+            <a class="level-item" aria-label="retweet" data-balloon="Download PDF" data-balloon-length="fit" data-balloon-pos="up" @click="download(data.guid)">
+              <span class="icon is-medium">
+                <i class="fa fa-download" aria-hidden="true"></i>
+              </span>
+            </a>        
+          </div>
+        </nav>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="signin">
+    <div class="hero-body">
+      <div v-if="token().token" class="container narrow has-text-centered">
+        <h1 class="title is-uppercase">You are currently signed in</h1>
+        <h2 class="subtitle is-uppercase">What do you want to do?</h2>
+        <form class="form has-text-left">
+          <div class="field is-grouped">
+            <div class="control">
+              <button @click="filters.endSession()" class="button is-text">End session</button>
+            </div>
+            <div class="control">
+              <a href="/account" class="button is-link">Go to My Account</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div v-if="!token().token" class="container narrow has-text-left">
+        <h1 class="title is-uppercase">Sign in</h1>
+        <h2 class="subtitle is-uppercase">Get access to your account</h2>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" placeholder="johndoe@gmail.com" autofocus required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+              <input class="input" type="password" name="password" placeholder="********" required>
+            </div>
+            <p v-if="message && message.length" class="help" :class="messageType" v-html="message"></p>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Login</button>
+            </div>
+          </div>    
+          <div class="field">
+            <div class="control">
+              <a href="/recover-password" class="button is-text" data-balloon="Regain access to your account in two easy steps" data-balloon-length="fit" data-balloon-pos="right">Forgot password</a>
+            </div>
+            <div class="control">
+              <a href="/sign-up" class="button is-text" data-balloon="Create your account in fifteen seconds" data-balloon-length="fit" data-balloon-pos="right">Create an account</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="recoverpassword">
+    <div class="hero-body">
+      <div class="container narrow has-text-left">
+        <h1 class="title is-uppercase">Recover account access</h1>
+        <h2 class="subtitle is-uppercase">Please enter your e-mail account.</h2>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" placeholder="johndoe@gmail.com" autofocus required>
+            </div>
+            <p v-if="message && message.length" class="help" :class="messageType" v-html="message"></p>            
+          </div>
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Recover Password</button>
+            </div>
+          </div>    
+          <div class="field">
+            <div class="control">
+              <a href="/sign-up" class="button is-text">Create an account</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="updatepassword">
+    <div class="hero-body">
+      <div class="container narrow has-text-left">
+        <h1 class="title is-uppercase">Update your password</h1>
+        <h2 class="subtitle is-uppercase">Please enter your new password.</h2>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <input type="hidden" name="token" :value="token" />
+          <div class="field">
+            <label class="label">New password</label>
+            <div class="control">
+              <input class="input" type="password" name="password" placeholder="********" required>
+            </div>
+            <p v-if="message && message.length" class="help" :class="messageType" v-html="message"></p>
+          </div>
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Update Password</button>
+            </div>
+          </div>    
+          <div class="field">
+            <div class="control">
+              <a href="/sign-up" class="button is-text">Create an account</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="signup">
+    <div class="hero-body">
+      <div v-if="token().token" class="container narrow has-text-centered">
+        <h1 class="title is-uppercase">You are currently signed in</h1>
+        <h2 class="subtitle is-uppercase">What do you want to do?</h2>
+        <form class="form has-text-left">
+          <div class="field is-grouped">
+            <div class="control">
+              <a href="/" class="button is-text">Go to home page</a>
+            </div>
+            <div class="control">
+              <button class="button is-link" @click="filters.endSession()">End session</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div v-if="!token().token" class="container narrow has-text-left">
+        <h1 class="title is-uppercase">Sign up</h1>
+        <h2 class="subtitle is-uppercase">Create your account</h2>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <label class="label">First Name</label>
+                <div class="control">
+                  <input class="input" name="first_name" type="text" placeholder="John" autofocus required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control">
+                  <input class="input" type="text" name="last_name" placeholder="Doe" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" placeholder="johndoe@gmail.com" required>
+            </div>
+            <p class="help is-danger is-hidden">This email is invalid</p>
+          </div>
+
+          <!--div class="field">
+            <label class="label">Subject</label>
+            <div class="control">
+              <div class="select">
+                <select>
+                  <option>Select dropdown</option>
+                  <option>With options</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Message</label>
+            <div class="control">
+              <textarea class="textarea" placeholder="Textarea"></textarea>
+            </div>
+          </div-->
+
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" v-model="acceptTerms">
+                I agree to the <a href="/tos">terms and conditions</a>
+              </label>
+            </div>
+            <p v-if="message && message.length" class="help" :class="messageType" v-html="message"></p>
+          </div>
+
+          <!--div class="field">
+            <div class="control">
+              <label class="radio">
+                <input type="radio" name="question">
+                Domestic
+              </label>
+              <label class="radio">
+                <input type="radio" name="question">
+                Business
+              </label>
+            </div>
+          </div-->
+
+          <div class="field">
+            <div class="control">
+              <button type="submit" class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Create account</button>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <a href="/sign-in" class="button is-text" data-balloon="Sign in to your account" data-balloon-length="fit" data-balloon-pos="right">Already have an account?</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </script>
+
+  <!--script type="text/x-jsrender" id="belief">
+    <div class="belief [[:value]]">
+      <textarea></textarea>
+      <div class="pencil"><span class="fa fa-pencil"></span></div>
+      <div class="save"><span class="fa fa-check"></span></div>
+      <div class="remove"><span class="fa fa-times"></span></div>
+    </div>
+  </script-->  
+
+  <script type="text/x-template" id="contact">
+    <div class="hero-body">
+      <div class="container narrow has-text-left">
+        <h1 class="title is-uppercase">Contact us</h1>
+        <h2 class="subtitle is-uppercase">Ask anything you want, we'll be replying you soon.</h2>
+        <p v-if="token().token">
+          From: <span class="has-text-success" v-html="token().email"></span>
+          <input name="uid" type="hidden" :value="token().id">
+        </p>
+        <form class="form has-text-left" @submit.prevent="submit">
+          <div class="field is-horizontal" v-if="!token().token">
+            <div class="field-body">
+              <div class="field">
+                <label class="label">First Name</label>
+                <div class="control">
+                  <input class="input" name="first_name" type="text" placeholder="John" autofocus required>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control">
+                  <input class="input" type="text" name="last_name" placeholder="Doe" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field" v-if="!token().token">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input" type="email" name="email" placeholder="johndoe@gmail.com" autofocus required>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Select a reason</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select name="reason">
+                  <option value="">Choose a reason</option>
+                  <option value="technicalissue" :selected="hash == 'technicalissue'">Technical issue</option>
+                  <option value="sales" :selected="hash == 'sales'">Sales</option>
+                  <option value="marketing" :selected="hash == 'marketing'">Marketing</option>
+                  <option value="other" :selected="hash != 'technicalissue' && hash != 'sales' && hash != 'marketing'">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Your comments</label>
+            <div class="control">
+              <textarea name="comment" class="textarea is-success" placeholder="Please explain briefly how can we help you."></textarea>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <label class="checkbox">
+                <input type="checkbox" v-model="acceptTerms">
+                I agree to the <a href="/tos">terms and conditions</a>
+              </label>
+            </div>
+          </div>
+
+          <div class="field" v-if="message && message.length">
+            <p class="help" :class="messageType" v-html="message"></p>
+          </div>
+
+          <div class="field">
+            <div class="control ">
+              <button type="submit" class="button is-link is-medium is-fullwidth" :class="{'is-loading' : loading}">Send</button>
+            </div>
+          </div>    
+          <div class="field">
+            <div class="control" v-if="!token().token">
+              <a href="/sign-in" class="button is-text">Send as registered account</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>  
+  </script>
+
+  <script type="text/x-jsrender" id="sessionended">
+    <div class="hero-body">
+      <div class="container">
+        <div class="inline-background fadeIn">
+          <div class="content hero">
+            <h2 class="has-text-white"><span class="icon has-text-success fa fa-sign-out-alt"></span> &nbsp;&nbsp;Your session has ended</h2> 
+            <p>You have successfully sign-out from ReFocus.</p>
+            <div class="field is-grouped">
+              <div class="control">
+                <a href="/sign-in" class="button is-text">Sign in</a>     
+              </div>
+              <div class="control">
+                <a href="/" class="button is-link">Go to homepage</a>
+              </div>
+            </div>        
+          </div>
+        </div>
+      </div>  
+    </div>
+  </script>
+
+  <script type="text/x-jsrender" id="sessionexpired">
+    <div class="hero-body">
+      <div class="container">
+        <div class="inline-background fadeIn">
+          <div class="content hero">
+            <h2><span class="icon has-text-danger fa fa-hourglass"></span> &nbsp;&nbsp;Session expired</h2> 
+            <p>Your session has expired due to inactivity. If you want to continue authenticated please sign in again, otherwise just ignore this message.</p>
+            <div class="field is-grouped">
+              <div class="control">
+                <a href="/" class="button is-text">Go to homepage</a>
+              </div>
+              <div class="control">
+                <a href="/sign-in" class="button is-link">Sign in</a>
+              </div>
+            </div>        
+          </div>
+        </div>
+      </div>
+    </div>  
+  </script>
+
+  <script type="text/x-jsrender" id="notfound">
+    <div class="container">
+      <div class="inline-background notfound fadeIn">
+        <div class="content hero">
+          <h2 class="has-text-white"><span class="icon has-text-warning fa fa-bolt"></span> &nbsp;&nbsp;Something unpredictable happened</h2> 
+          <p>The current URL is not retrieving any content. If you think this is an error please feel free to contact us.</p>
+          <div class="field is-grouped">
+            <div class="control">
+              <a href="/contact-us#techincal-issue" class="button is-text">Contact us</a>              
+            </div>
+            <div class="control">
+              <a href="/" class="button is-link">Go to homepage</a>
+            </div>
+          </div>        
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="opener">
+    <div class="hero-body">
+      <div class="container">
+        <div class="inline-background fadeIn">
+          <div class="content hero">
+            <h2><span class="icon has-text-warning fa fa-hourglass"></span> &nbsp;&nbsp;Redirecting</h2> 
+            <p v-html="url"></p>
+            <p>Please wait...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-jsrender" id="step_ind">
+    <span><span class="ind"></span></span>
+  </script>
+
+  <script type="text/x-jsrender" id="navbaritem">
+    <li><a href="[[:slug]]">[[:title]]</a></li>
+  </script>
+
+  <!--script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnCpylsXEujI2Jb07gggRfcewyYwJSbqU&libraries=places"></script-->
+  <!--script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script-->
+  {% if localhost == false %}
+  <script src="/dist/bundle.js?_={{rev_parse}}" type="text/javascript"></script>
+  {% else %}
+  <script src="/js/vue.min.js" type="text/javascript"></script>  
+  <script src="/js/vue-router.js" type="text/javascript"></script>  
+  <script src="/js/vue-resource.min.js" type="text/javascript"></script>  
+  <script src="/js/moment-with-locales.min.js"></script>  
+  <!--script src="/js/bulma-quickview.min.js"></script-->
+  <script src="/js/jquery.min.js"></script>
+  <!--script src="/js/jquery.typer.js"></script-->
+  <script src="/js/bulma.js"></script>
+  <script src="/js/jsrender.min.js"></script>
+  <script src="/js/base64.js"></script>
+  <script src="/js/binaryajax.js"></script>
+  <script src="/js/exif.js"></script>
+  <script src="/js/slick.min.js"></script>
+  <script src="/js/sweetalert.min.js"></script>
+  <script src="/js/app.js" type="text/javascript"></script>  
+  <script src="/js/refocus.js" type="text/javascript"></script>
+  <!--script src="/js/components.js" type="text/javascript"></script-->
+  <script src="/js/routes.js" type="text/javascript"></script>  
+  {% endif %}
+</body>
+</html>

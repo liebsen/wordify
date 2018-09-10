@@ -1,0 +1,212 @@
+.refocus-canvas .instructions {
+  padding: 10px;
+  text-align: left;
+}
+
+.refocus-canvas .instructions .typer {
+  color: #555;
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.refocus-canvas .next-step {
+  color: white;
+  opacity: 1;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+  padding: 8px 15px;
+  background-color: #006fff;
+}
+
+.refocus-canvas .next-step a {
+  color: white;
+}
+
+.refocus-canvas .belief {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border: 4px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .3s;
+  box-shadow: 0 0 10px #999;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;  
+  /*
+  animation:1s cubic-bezier(1, -0.5, 0.5, 1) .1s normal forwards 1 fadeIn;*/
+}
+
+.refocus-canvas .core {
+  background-color: red;
+  border-color: white;
+}
+
+.refocus-canvas .support {
+  background-color: white;
+  border-color: #005dff;
+}
+
+.refocus-canvas .belief:nth-child(2) {
+ left:180px!important;
+ top:180px!important;  
+}
+
+.refocus-canvas .belief:nth-child(3) {
+ left:180px!important;
+ bottom:180px!important;
+}
+
+.refocus-canvas .belief:nth-child(4) {
+ right:180px!important;
+ top:180px!important;  
+}
+
+.refocus-canvas .belief:nth-child(5) {
+ right:180px!important;
+ bottom:180px!important;  
+}
+
+.refocus-canvas .core-opposite {
+  background-color: #005dff;
+  border-color: white;
+}
+
+.refocus-canvas .opposite {
+  background-color: white;
+  border-color: red;
+}
+
+.refocus-canvas .core textarea,
+.refocus-canvas .core-opposite textarea {
+  color: white;
+}
+
+.refocus-canvas .support textarea,
+.refocus-canvas .opposite textarea {
+  color: black;
+}
+
+/*.refocus-canvas .belief:hover,*/
+.refocus-canvas .belief.edit {
+  z-index: 99;
+  transform: scale(2.2);
+  box-shadow: 0 0 50px #999;
+}
+
+.refocus-canvas .belief textarea {
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  word-break: normal;
+  background: transparent;
+  resize: none;
+  border: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 9;
+  top:  20px;
+  left: 6px;
+  text-transform: uppercase;  
+}
+
+.refocus-canvas .belief .pencil {
+  position: absolute;
+  top: 23px;
+  left: 30px;
+  color: white;
+  background-color: transparent;
+  transition: opacity .7s;
+}
+
+.refocus-canvas .belief .pencil .fa {
+  font-size: 40px;
+}
+
+.refocus-canvas .belief.support .pencil .fa, 
+.refocus-canvas .belief.opposite .pencil  .fa {
+  color:#999;
+}
+
+.refocus-canvas .belief .save {
+  position: absolute;
+  right: -15px;
+  bottom: 10px;
+  opacity: 0;
+  color: white;
+  background-color: #00b600;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: opacity .7s;
+  border: 1px solid white;
+}
+
+.refocus-canvas .belief .remove {
+  position: absolute;
+  right: -18px;
+  top: 20px;
+  opacity: 0;
+  color: white;
+  background-color: red;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: opacity .7s;
+  border: 1px solid white;
+}
+
+.refocus-canvas .belief.edit .save, 
+.refocus-canvas .belief.edit .remove {
+  opacity: 1;
+}
+
+.refocus-canvas .belief.edit .pencil {
+  opacity: 0;
+}
+
+.refocus-canvas .belief.main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+@keyframes scaleIn{
+  from{
+    opacity:1;
+    -webkit-transform:scale(1.5);
+    transform:scale(1.5)
+  }
+  to{
+    opacity:1;
+    -webkit-transform:scale(3);
+    transform:scale(3)
+  }
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    -webkit-transform:scale(0.75);
+    transform:scale(0.75)
+  }
+  to{
+    opacity:1;
+    -webkit-transform:scale(1);
+    transform:scale(1)
+  }
+}

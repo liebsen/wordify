@@ -1,0 +1,52 @@
+{% extends "layouts/email.html" %}
+
+{% block body %}
+            <!-- START CENTERED WHITE CONTAINER -->
+            <span class="preheader">Welcome {{recipient.first_name}} {{recipient.last_name}} to Refocus!</span>
+            <table class="main">
+
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td class="wrapper">
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <h2>Welcome {{recipient.first_name}} {{recipient.last_name}} to Refocus!</h2>
+                        <p>We give you the welcome to our site.</p>
+                        <p>Please make sure you validate your account by pressing the following link. <strong>You must validate your account before sign-in for the first time</strong>.</p>
+                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                          <tbody>
+                            <tr>
+                              <td align="left">
+                                <table border="0" cellpadding="0" cellspacing="0">
+                                  <tbody>
+                                    <tr>
+                                      <td> <a href="{{api_url}}/api/v2/auth/validates/{{email_encoded}}" target="_blank">Validate my account</a> </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h3>Access to your account</h3>
+                        <p>Username: {{recipient.email}}</p>
+                        <p>Password: {{readable_password}}</p>
+                        <p></p>
+                        <p>* This password has been randomly created by our system exclusively for you. If you want to establish your own please search for Account / Password in your account panel or go to once signed-in:</p>
+
+                        <p><a href="{{api_url}}/password">http://sandbox.the-blue-ocean-company.com/account/password</a></p>
+
+                        <p>Remember to stay updated with our <a href="{{api_url}}/tos">terms and conditions</a>.</p>
+                        <p>You can contact us at <a href="mailto:contact@refocus.com">contact@refocus.com</a>.</p>
+                        <p></p>
+                        <p>Sincerely,<a href="{{api_url}}">The Blue Ocean Company's Creative Team</a></p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <!-- END MAIN CONTENT AREA -->
+              </table>
+{% endblock %}              
